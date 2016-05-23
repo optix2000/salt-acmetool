@@ -1,0 +1,9 @@
+satisfy:
+  names:
+    - {{ domain }}
+{%- for sandomain in san %}
+    - {{ sandomain }}
+{%- endfor %}
+{% if overrides %}
+request: {{ overrides | yaml }}
+{% endif %}

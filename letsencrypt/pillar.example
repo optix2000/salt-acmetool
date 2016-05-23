@@ -1,0 +1,36 @@
+# Example pillar file
+
+letsencrypt:
+  # Email to recover letsencrypt account
+  # Defaults to empty email
+  email: example@example.invalid
+
+# ACME server to use to request certs
+# Defaults to the letsencrypt live server. Can be live|staging.
+# Can also specify a full acme directory URI.
+# server: https://acme-staging.api.letsencrypt.org/directory
+  server: live
+
+# Default key type for new certificates
+# Defaults to rsa. Can be rsa|ecdsa
+  key_type: rsa
+
+# Default key size for new certificates. Only applies when key_type is rsa
+# Defaults to 4096. Can be 2048-4096
+  key_size: 4096
+
+# Default ECDSA curve. Only applies when key_type is ecdsa
+  curve: nistp256
+
+# Specify a list of domains you want certs for
+  domains:
+    example.com:
+      # Specify a list of SAN domains that are in the same cert
+      san:
+        - www.example.com
+    subdomain.example.com: {}
+    subdomain2.example.com:
+      san:
+        - subdomain3.example.com
+        - subdomain3.example.com
+        - subdomain4.example.com
