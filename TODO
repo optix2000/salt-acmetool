@@ -1,4 +1,9 @@
 # TODO
 Have user be settable
 Be able to configure non-proxy modes
+  Is this really necessary? acmetool tries all methods regardless of what you set.
 Make a nginx includable file
+Add cronjob
+  Figure out how to reload nginx if you're nonroot
+  We don't want root, since it's a possible security hazard if you're proxying to it.
+  Proxying is cleaner [citation needed] than doing webroot, so should figure out a good way to do the reload hooks
