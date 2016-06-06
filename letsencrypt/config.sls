@@ -24,6 +24,7 @@
       - user: acme
       - file: /var/lib/acme/conf/responses
       - file: /var/lib/acme/conf/target
+      - file: /var/lib/acme/conf/perm
 
 /var/lib/acme/conf/responses:
   file.managed:
@@ -39,12 +40,12 @@
  # Fix will support require_in, so dependencies work properly
     - makedirs: True
     - defaults:
-        email: "{{ email }}"
-        server: "{{ server }}"
-        method: "{{ method }}"
-        key_type: "{{ key_type }}"
-        key_size: "{{ key_size }}"
-        curve: "{{ curve }}"
+        email: {{ email | yaml_encode }}
+        server: {{ server | yaml_encode }}
+        method: {{ method | yaml_encode }}
+        key_type: {{ key_type | yaml_encode }}
+        key_size: {{ key_size | yaml_encode}}
+        curve: {{ curve | yaml_encode }}
 
 /var/lib/acme/conf/target:
   file.managed:
@@ -60,9 +61,21 @@
  # Fix will support require_in, so dependencies work properly
     - makedirs: True
     - defaults:
-        email: "{{ email }}"
-        server: "{{ server }}"
-        method: "{{ method }}"
-        key_type: "{{ key_type }}"
-        key_size: "{{ key_size }}"
-        curve: "{{ curve }}"
+        email: {{ email | yaml_encode }}
+        server: {{ server | yaml_encode }}
+        method: {{ method | yaml_encode }}
+        key_type: {{ key_type | yaml_encode }}
+        key_size: {{ key_size | yaml_encode}}
+        curve: {{ curve | yaml_encode }}
+
+/var/lib/acme/conf/perm:
+  file.managed:
+    - user: acme
+    - group: acme
+    - template: jinja
+    - source: salt://letsencrypt/files/perm.jinja
+    - require:
+      - pkg: acmetool
+    - makedirs: True
+    - defaults:
+        perms: {{ salt['pillar.get']('letsencrypt:perms', []) | yaml }}

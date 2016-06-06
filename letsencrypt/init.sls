@@ -12,9 +12,6 @@ acme-dir-perms:
     - name: /var/lib/acme
     - user: acme
     - group: acme
-    - recurse:
-      - user
-      - group
     - require:
       - user: acme
       - pkg: acmetool
